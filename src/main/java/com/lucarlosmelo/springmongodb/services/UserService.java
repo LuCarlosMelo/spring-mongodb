@@ -1,6 +1,6 @@
 package com.lucarlosmelo.springmongodb.services;
 
-import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lucarlosmelo.springmongodb.domain.User;
 import com.lucarlosmelo.springmongodb.repositories.UserRepository;
+import com.lucarlosmelo.springmongodb.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class UserService {
@@ -25,9 +26,9 @@ public class UserService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<User> findById(UUID id){
-		
-		return null;
+	public User findById(UUID id){
+		Optional<User> user = repository.findById(id);
+		return user.orElseThrow(() -> new ObjectNotFoundException("Id not found"));
 	}
 	
 	
