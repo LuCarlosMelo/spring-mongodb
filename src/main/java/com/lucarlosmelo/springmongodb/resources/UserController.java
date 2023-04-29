@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lucarlosmelo.springmongodb.domain.User;
+import com.lucarlosmelo.springmongodb.domain.dto.UserDTO;
 import com.lucarlosmelo.springmongodb.services.UserService;
 
 @RestController
@@ -19,9 +20,10 @@ public class UserController {
 	private UserService service;
 	
 	@GetMapping
-	public ResponseEntity<Page<User>> findAll(Pageable pageable){
-		 Page<User> list = service.findAll(pageable);
-		return ResponseEntity.ok(list);
+	public ResponseEntity<Page<UserDTO>> findAll(Pageable pageable){
+		 Page<User> page = service.findAll(pageable);
+		 Page<UserDTO> pageDTO = page.map(x -> new UserDTO(x));
+		 return ResponseEntity.ok(pageDTO);
 	}
 	
 }
