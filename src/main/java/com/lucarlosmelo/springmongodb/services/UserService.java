@@ -3,6 +3,7 @@ package com.lucarlosmelo.springmongodb.services;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lucarlosmelo.springmongodb.domain.User;
+import com.lucarlosmelo.springmongodb.domain.dto.UserDTO;
 import com.lucarlosmelo.springmongodb.repositories.UserRepository;
 import com.lucarlosmelo.springmongodb.services.exceptions.ObjectNotFoundException;
 
@@ -31,5 +33,11 @@ public class UserService {
 		return user.orElseThrow(() -> new ObjectNotFoundException("Id not found"));
 	}
 	
+	@Transactional
+	public User insert(UserDTO userDTO) {
+		User user = new User();
+		BeanUtils.copyProperties(userDTO, user);
+		return repository.save(user);
+	}
 	
 }
