@@ -40,4 +40,13 @@ public class UserService {
 		return repository.save(user);
 	}
 	
+	public void delete(UUID id) {
+		try {
+			repository.deleteById(id);			
+		} 
+		catch (ObjectNotFoundException e) {
+			throw new ObjectNotFoundException("id not found" + id);
+		}
+	}
+
 }
