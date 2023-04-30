@@ -17,36 +17,49 @@ import com.lucarlosmelo.springmongodb.services.exceptions.ObjectNotFoundExceptio
 
 @Service
 public class UserService {
-	
+
 	@Autowired
 	private UserRepository repository;
-	
+
 	@Transactional(readOnly = true)
-	public Page<User> findAll(Pageable pageable){
+	public Page<User> findAll(Pageable pageable) {
 		Page<User> page = repository.findAll(pageable);
 		return page;
 	}
-	
+
 	@Transactional(readOnly = true)
-	public User findById(UUID id){
+	public User findById(UUID id) {
 		Optional<User> user = repository.findById(id);
 		return user.orElseThrow(() -> new ObjectNotFoundException("Id not found"));
 	}
-	
+
 	@Transactional
 	public User insert(UserDTO userDTO) {
 		User user = new User();
 		BeanUtils.copyProperties(userDTO, user);
 		return repository.save(user);
 	}
-	
+
+	@Transactional
+	public UserDTO update(UUID id, UserDTO userDTO) {
+		Optional<User> userOptional = repository.findById(id);
+		var user = dtoToModel(userDTO, userOptional.get());
+		user =  repository.save(user);
+		return new UserDTO(user);
+	}
+
 	public void delete(UUID id) {
 		try {
-			repository.deleteById(id);			
-		} 
-		catch (ObjectNotFoundException e) {
+			repository.deleteById(id);
+		} catch (ObjectNotFoundException e) {
 			throw new ObjectNotFoundException("id not found" + id);
 		}
+	}
+
+	public User dtoToModel(UserDTO userDTO, User user) {
+		user.setName(userDTO.getName());
+		user.setEmail(userDTO.getEmail());
+		return user;
 	}
 
 }

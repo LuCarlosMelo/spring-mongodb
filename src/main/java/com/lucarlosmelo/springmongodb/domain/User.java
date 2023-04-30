@@ -19,7 +19,7 @@ public class User implements Serializable {
 	
 	@Id
 	@Setter(AccessLevel.NONE)
-	private UUID ID = UUID.randomUUID();
+	private UUID id = UUID.randomUUID();
 	private String name;
 	private String email;
 	

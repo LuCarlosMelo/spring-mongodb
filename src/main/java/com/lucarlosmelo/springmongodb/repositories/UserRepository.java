@@ -9,5 +9,4 @@ import com.lucarlosmelo.springmongodb.domain.User;
 
 @Repository
 public interface UserRepository extends MongoRepository<User, UUID> {
-
 }
