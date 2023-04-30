@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import com.lucarlosmelo.springmongodb.domain.Post;
 import com.lucarlosmelo.springmongodb.domain.User;
 import com.lucarlosmelo.springmongodb.domain.dto.AuthorDTO;
+import com.lucarlosmelo.springmongodb.domain.dto.CommentDTO;
 import com.lucarlosmelo.springmongodb.repositories.PostRepository;
 import com.lucarlosmelo.springmongodb.repositories.UserRepository;
 
@@ -39,6 +40,14 @@ public class Instantiation implements CommandLineRunner {
 				new AuthorDTO(maria));
 		var post2 = new Post(LocalDateTime.now(ZoneId.of("GMT")), "Bom dia", "Acordei feliz hoje",
 				new AuthorDTO(maria));
+		
+		var comment1 = new CommentDTO("Boa viagem!", LocalDateTime.now(), new AuthorDTO(alex));		
+		var comment2 = new CommentDTO("Boa viage!", LocalDateTime.now(), new AuthorDTO(bob));		
+		var comment3 = new CommentDTO("Boa viage!", LocalDateTime.now(), new AuthorDTO(alex));		
+		
+		post1.getComments().addAll(Arrays.asList(comment1, comment2));
+		post2.getComments().addAll(Arrays.asList(comment3));
+		
 		postRepository.saveAll(Arrays.asList(post1, post2));
 		
 		maria.getPosts().addAll(Arrays.asList(post1, post2));
