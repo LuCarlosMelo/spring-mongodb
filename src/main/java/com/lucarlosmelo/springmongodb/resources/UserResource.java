@@ -1,6 +1,7 @@
 package com.lucarlosmelo.springmongodb.resources;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.lucarlosmelo.springmongodb.domain.Post;
 import com.lucarlosmelo.springmongodb.domain.User;
 import com.lucarlosmelo.springmongodb.domain.dto.UserDTO;
 import com.lucarlosmelo.springmongodb.services.UserService;
@@ -60,5 +62,12 @@ public class UserResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@GetMapping(value = "/{id}/posts")
+	public ResponseEntity<List<Post>> findPosts(@PathVariable UUID id) {
+		User user = service.findById(id);
+		return ResponseEntity.ok(user.getPosts());
+	}
+
 	
 }

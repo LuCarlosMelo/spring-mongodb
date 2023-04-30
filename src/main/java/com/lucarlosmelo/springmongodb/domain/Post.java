@@ -7,6 +7,8 @@ import java.util.UUID;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.lucarlosmelo.springmongodb.domain.dto.AuthorDTO;
+
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,10 +27,9 @@ public class Post implements Serializable{
 	private LocalDateTime date;
 	private String title;
 	private String body;
+	private AuthorDTO author;
 	
-	private User author;
-	
-	public Post(LocalDateTime date, String title, String body, User author) {
+	public Post(LocalDateTime date, String title, String body, AuthorDTO author) {
 		super();
 		this.date = date;
 		this.title = title;
