@@ -1,5 +1,6 @@
 package com.lucarlosmelo.springmongodb.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -28,5 +29,10 @@ public class PostService {
 	public List<Post> findByTitle(String text) {
 		return repository.searchTitle(text);
 	}
-
+	
+	
+	public List<Post> fullSearch(String text, LocalDateTime minDate, LocalDateTime maxDate) {
+		maxDate.plusHours(24L);
+		return repository.fullSearch(text, minDate, maxDate);
+	}
 }

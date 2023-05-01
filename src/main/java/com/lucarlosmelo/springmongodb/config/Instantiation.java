@@ -1,10 +1,7 @@
 package com.lucarlosmelo.springmongodb.config;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+import static com.lucarlosmelo.springmongodb.resources.util.URL.date;
+
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,12 +54,5 @@ public class Instantiation implements CommandLineRunner {
 
 	}
 
-	public LocalDateTime date(String date) {
-		var utc = ZoneId.of("GMT");
-		var dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withZone(utc);
-
-		return ZonedDateTime.parse(date, dateFormat).toLocalDateTime();
-
-	}
 
 }
