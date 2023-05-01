@@ -1,5 +1,6 @@
 package com.lucarlosmelo.springmongodb.services;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,6 +24,9 @@ public class PostService {
 		Optional<Post> post = repository.findById(id);
 		return post.orElseThrow(() -> new ObjectNotFoundException("Id not found"));
 	}
-
+	
+	public List<Post> findByTitle(String text) {
+		return repository.searchTitle(text);
+	}
 
 }
